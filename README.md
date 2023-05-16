@@ -3,8 +3,6 @@
 ## 1. Set Up Django in Project
 We're going to start from the solution for Django views lesson. You'll need to clone this solution down and get it set up before proceeding:
 
-    Clone the views-solution branch
-    Checkout the views-solution branch: git checkout views-solution
     Create a new virtual environment: pipenv shell
     Install the dependencies: pipenv install
    
@@ -19,8 +17,6 @@ Now we need to get the app up and running:
     Run the migrations: python manage.py migrate
     Run the application: python manage.py runserver
     
-All of that should have worked! If anything didn't work, let an instructor know so you can debug the issue with them.
-
 Now we need to get the Django Rest Framework installed and set up. Before we get started, install the djangorestframework dependency:
 
     pipenv install djangorestframework
