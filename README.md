@@ -1,25 +1,25 @@
 # DJANGO_API
 
 ## 1. Set Up Django in Project
-   We're going to start from the solution for Django views lesson. You'll need to clone this solution down and get it set up before proceeding:
+We're going to start from the solution for Django views lesson. You'll need to clone this solution down and get it set up before proceeding:
 
     Clone the views-solution branch
     Checkout the views-solution branch: git checkout views-solution
     Create a new virtual environment: pipenv shell
     Install the dependencies: pipenv install
    
-   Before getting the app up and running, you'll probably want to delete the old database and recreate it:
+Before getting the app up and running, you'll probably want to delete the old database and recreate it:
 
     Sign into Postgres: psql / psql -d <database>
     Delete the existing database: drop database tunr;
     (optional) Create the user: create user tunr_admin with password 'tunr';
     Grant privileges to tunruser: grant all privileges on database tunr to tunruser;
-   Now we need to get the app up and running:
+Now we need to get the app up and running:
    
     Run the migrations: python manage.py migrate
     Run the application: python manage.py runserver
     
-   All of that should have worked! If anything didn't work, let an instructor know so you can debug the issue with them.
+All of that should have worked! If anything didn't work, let an instructor know so you can debug the issue with them.
 
 Now we need to get the Django Rest Framework installed and set up. Before we get started, install the djangorestframework dependency:
 
@@ -33,7 +33,7 @@ Now we need to get the Django Rest Framework installed and set up. Before we get
     ]
 Note that you may have django_extensions installed here too. Keep both!
 
-Serializers
+#### Serializers
 Serializers allow us to convert our data from QuerySets (the data type returned by Django's ORM) to data that can easily be converted to JSON (or XML) and returned by our API.
 
 There are several types of serializers built into Django REST framework; however, we will be using the HyperlinkedModelSerializer today. This serializer allows us to specify model fields that we want to include in our API and it will generate our JSON accordingly. It will also allow us to link from one model to another.
@@ -71,7 +71,7 @@ We are creating a HyperlinkedRelatedField and pointing it to the song_detail vie
 
     path('songs/<int:pk>', views.song_detail, name='song_detail')"
 
-Authentication
+#### Authentication
 Now that you have a functional API, it's time to add authentication using the Django Rest Framework's built-in session-based authentication system. You'll need to require authentication for any actions that modify the book inventory (e.g. creating a new book, updating an existing book, or deleting a book).
 Authentication is the mechanism of associating an incoming request with a set of identifying credentials, such as the user the request came from, or the token that it was signed with. The permission and throttling policies can then use those credentials to determine if the request should be permitted.
 
@@ -108,7 +108,7 @@ Build the base API using Django and the Django Rest Framework. You'll need to de
     Name
     Description
 
-Views
+#### Views
 Once you have defined your models, you'll need to create the necessary serializers and views to expose the API endpoints for CRUD (Create, Read, Update, Delete) operations on the Book model. You should also be able to link between models (i.e. your Book model should return URLs to your Author and Genre models). Django REST framework has a bunch of utility functions and classes for implementing sets of views in Django. Instead of creating each view individually, Django REST framework will create multiple views for us in a few lines of code.
 
     Class-based views
@@ -131,7 +131,7 @@ For example, we can use the ListCreateAPIView to create both our list view for o
         queryset = Artist.objects.all()
         serializer_class = ArtistSerializer"
 
-URLs
+#### URLs
 DRF comes with some pre-configured conventions for URLs, in what they call a router. These URLs map to views that follow a naming convention.
 Since Django can handle multiple request types in one view and using one url, we just need to set up two routes: one for the single view and one for the list view.
 
@@ -162,14 +162,14 @@ Wouldn't it be cool if each Artist and Song in the List view contained a link to
             model = Artist
     -        fields = ('id', 'photo_url', 'nationality', 'name', 'songs',)
     +        fields = ('id', 'artist_url', 'photo_url', 'nationality', 'name', 'songs',)
-Testing
+#### Testing
 Now let's hit the urls we just built out and see what happens.
 
     http://localhost:8000/artists/
     http://localhost:8000/artists/1/
     http://localhost:8000/songs/
     http://localhost:8000/songs/1/
-Cors
+#### Cors
 We need to configure CORS in order for other applications to use the API we just created. The Django Rest Documentation page on AJAX is a great place to get started. It endorses the Django Cors Headers middleware, which can be installed like any other dependency with pipenv and is configured in the Project's settings.py
 
 ## 3. Bonus Feature (req. & tbd)
